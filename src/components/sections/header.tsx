@@ -6,7 +6,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import Logo from '../../../public/lo.png';
+import Logo from '../../../public/Icon.png';
 
 export default function Navbar() {
   /** disable eslint */
