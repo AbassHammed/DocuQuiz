@@ -3,11 +3,51 @@ import { Inter } from 'next/font/google';
 
 import './globals.css';
 
+import { siteConfig } from '@config/site';
+
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'DocuQuiz',
-  description: 'Transform Your Documents into Engaging Quizzes',
+  title: {
+    default: siteConfig.name,
+    template: `%s - ${siteConfig.name}`,
+  },
+  metadataBase: new URL(siteConfig.url),
+  description: siteConfig.description,
+  keywords: ['Quiz', 'Quizzes', 'Docu quizzies'],
+  authors: [
+    {
+      name: 'Abass Hammed',
+      url: 'https://hammedabass.com',
+    },
+  ],
+  creator: 'Abass Hammed',
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: siteConfig.url,
+    title: siteConfig.name,
+    description: siteConfig.description,
+    siteName: siteConfig.name,
+    images: [
+      {
+        url: siteConfig.ogImage,
+        width: 1200,
+        height: 630,
+        alt: siteConfig.name,
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: siteConfig.name,
+    description: siteConfig.description,
+    images: [siteConfig.ogImage],
+    creator: '@shadcn',
+  },
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
@@ -17,7 +57,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} pattern`}>{children}</body>
     </html>
   );
 }
