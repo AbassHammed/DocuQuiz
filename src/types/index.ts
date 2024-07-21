@@ -19,3 +19,5 @@ export type QuizType = {
   answer: string;
   ressources: [{ title: string; link: string }];
 };
+
+export type StreamStatus = 'idle' | 'streaming' | 'done' | 'start' | 'summary';
