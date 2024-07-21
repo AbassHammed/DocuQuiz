@@ -28,3 +28,4 @@ export {
   SelectScrollUpButton,
   SelectScrollDownButton,
 } from './shared/select';
+export { Tabs, TabsList, TabsTrigger, TabsContent } from './shared/tabs';
