@@ -2,7 +2,7 @@
 /* eslint-disable quotes */
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   Form,
@@ -22,6 +22,7 @@ import {
 } from '@components';
 import { zodResolver } from '@hookform/resolvers/zod';
 import pdfToText from '@lib/utils';
+import { XIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -65,7 +66,22 @@ const HomeForm = () => {
   const [error, setError] = useState<Error | undefined>();
   const [generating, setGenerating] = useState(false);
 
-  const handleSelectFile = (files: FileList | null) => {
+  const convertPdfToText = async (files: File) => {
+    if (!files) {
+      toast({
+        variant: 'destructive',
+        title: 'Error loading file',
+        description: 'Make sure the file is a searchable PDF file and less than 10MB in size. ',
+      });
+      return;
+    }
+
+    await pdfToText(files)
+      .then(response => setNote(response))
+      .catch(error => setError(error));
+  };
+
+  const handleSelectFile = async (files: FileList | null) => {
     if (!files || files.length === 0) {
       return toast({
         variant: 'warn',
@@ -83,28 +99,13 @@ const HomeForm = () => {
       });
     }
     setPdfFile(file);
-  };
-
-  const convertPdfToText = async () => {
-    if (!pdfFile) {
-      toast({
-        variant: 'destructive',
-        title: 'Error loading file',
-        description: 'Make sure the file is a searchable PDF file and less than 10MB in size. ',
-      });
-      return;
-    }
-
-    await pdfToText(pdfFile)
-      .then(response => setNote(response))
-      .catch(error => setError(error));
+    await convertPdfToText(file);
   };
 
   const handleFile = async (files: FileList | null) => {
     try {
       setGenerating(true);
       handleSelectFile(files);
-      await convertPdfToText();
     } catch (error) {
       setError(error as Error);
     } finally {
@@ -198,6 +199,79 @@ const HomeForm = () => {
                   </FormItem>
                 )}
               />
+              <FormField
+                control={form.control}
+                name="time"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Completion Time</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a reasonable time" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {quizTime.map(diff => (
+                          <SelectItem key={diff.label} value={diff.label}>
+                            {diff.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="mt-5">
+              <div className="max-w-lg mx-auto">
+                {!pdfFile && (
+                  <div className="max-w-md h-40 rounded-lg border-2 border-gray-400 border-dashed flex items-center justify-center">
+                    <label htmlFor="file" className="cursor-pointer text-center p-4 md:p-8">
+                      <svg
+                        className="w-10 h-10 mx-auto"
+                        viewBox="0 0 41 40"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M12.1667 26.6667C8.48477 26.6667 5.5 23.6819 5.5 20C5.5 16.8216 7.72428 14.1627 10.7012 13.4949C10.5695 12.9066 10.5 12.2947 10.5 11.6667C10.5 7.0643 14.231 3.33334 18.8333 3.33334C22.8655 3.33334 26.2288 6.19709 27.0003 10.0016C27.0556 10.0006 27.1111 10 27.1667 10C31.769 10 35.5 13.731 35.5 18.3333C35.5 22.3649 32.6371 25.7279 28.8333 26.5M25.5 21.6667L20.5 16.6667M20.5 16.6667L15.5 21.6667M20.5 16.6667L20.5 36.6667"
+                          stroke="#4F46E5"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                      <p className="mt-3 text-black max-w-xs mx-auto">
+                        Click to{' '}
+                        <span className="font-medium text-indigo-600">Upload your file</span> or
+                        drag and drop your file here
+                      </p>
+                    </label>
+                    <input
+                      id="file"
+                      type="file"
+                      className="hidden"
+                      accept="application/pdf"
+                      onChange={e => handleFile(e.target.files)}
+                    />
+                  </div>
+                )}
+
+                {pdfFile && (
+                  <div className="mt-5 bg-white p-4 rounded shadow relative">
+                    <button
+                      className="absolute top-2 right-2 text-gray-400 hover:text-gray-600"
+                      onClick={handleRemoveFile}>
+                      <XIcon size={20} />
+                    </button>
+
+                    <p className="text-lg text-gray-500 font-semibold">{pdfFile.name}</p>
+                    <p className="text-sm text-gray-500">Size: {pdfFile.size} bytes</p>
+                  </div>
+                )}
+              </div>
             </div>
           </form>
         </Form>
