@@ -5,6 +5,9 @@
 import { useState } from 'react';
 
 import { useToast } from '@components';
+import { zodResolver } from '@hookform/resolvers/zod';
+import pdfToText from '@lib/utils';
+import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 const MAX_FILE_SIZE = 10000000; //10MB
@@ -43,8 +46,11 @@ type HomeFormValues = z.infer<typeof homeFormSchema>;
 const HomeForm = () => {
   const [pdfFile, setPdfFile] = useState<File>();
   const { toast } = useToast();
+  const [note, setNote] = useState<string | undefined>();
+  const [error, setError] = useState<Error | undefined>();
+  const [generating, setGenerating] = useState(false);
 
-  const handleSelectedFile = (files: FileList | null) => {
+  const handleSelectFile = (files: FileList | null) => {
     if (!files || files.length === 0) {
       return toast({
         variant: 'warn',
@@ -64,6 +70,40 @@ const HomeForm = () => {
     setPdfFile(file);
   };
 
+  const convertPdfToText = async () => {
+    if (!pdfFile) {
+      toast({
+        variant: 'destructive',
+        title: 'Error loading file',
+        description: 'Make sure the file is a searchable PDF file and less than 10MB in size. ',
+      });
+      return;
+    }
+
+    await pdfToText(pdfFile)
+      .then(response => setNote(response))
+      .catch(error => setError(error));
+  };
+
+  const handleFile = async (files: FileList | null) => {
+    setGenerating(true);
+    handleSelectFile(files);
+    await convertPdfToText();
+    setGenerating(false);
+  };
+
+  const defaultValues: Partial<HomeFormValues> = {
+    topic: '',
+    difficult: '',
+    quiz: '',
+    time: '',
+  };
+
+  const form = useForm<HomeFormValues>({
+    resolver: zodResolver(homeFormSchema),
+    defaultValues,
+  });
+
   const handleRemoveFile = () => setPdfFile(undefined);
   return (
     <section className="relative bg-gray-400 border border-zinc-100 rounded-2xl max-w-4xl mx-auto lg:p-12 p-6 mb-10 min-h-72">
@@ -71,6 +111,7 @@ const HomeForm = () => {
         <h2 className="text-lg font-semibold mb-1">Add Notes</h2>
         <p className="text-xs text-zinc-400"> Paste your notes as text or upload a file</p>
       </header>
+      <div className="flex flex-col gap-3 mb-4"></div>
     </section>
   );
 };
