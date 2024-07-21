@@ -2,7 +2,7 @@
 /* eslint-disable quotes */
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   Button,
@@ -117,6 +117,12 @@ const HomeForm = () => {
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+    }
+  };
+
   const defaultValues: Partial<HomeFormValues> = {
     topic: '',
     difficult: '',
@@ -146,7 +152,11 @@ const HomeForm = () => {
                 <FormItem>
                   <FormLabel>Topic</FormLabel>
                   <FormControl>
-                    <Input placeholder="Object-oriented programming in Java" {...field} />
+                    <Input
+                      placeholder="Object-oriented programming in Java"
+                      {...field}
+                      onKeyDown={handleKeyDown}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -246,9 +256,21 @@ const HomeForm = () => {
                   <span>Upload file</span>
                 </TabsTrigger>
               </TabsList>
-              <TabsContent
-                value="note"
-                className="flex w-full items-center space-x-2 py-2"></TabsContent>
+              <TabsContent value="note" className="flex w-full items-center space-x-2 py-2">
+                <label htmlFor="notes" className="block mb-3 w-full">
+                  <span className="block text-sm font-semibold text-zinc-600 mb-2">Note</span>
+                  <textarea
+                    value={note}
+                    name="notes"
+                    id="notes"
+                    rows={10}
+                    cols={30}
+                    onChange={e => setNote(e.target.value)}
+                    required
+                    placeholder="Paste your note here."
+                    className="appearance-none w-full p-3 border border-zinc-200 placeholder-zinc-400 rounded-md focus:outline-none focus:ring-zinc-300 text-sm"></textarea>
+                </label>
+              </TabsContent>
               <TabsContent value="file" className="mr-2">
                 <div className="mt-5">
                   <div className="max-w-lg mx-auto">
