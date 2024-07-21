@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
-
-import { useState } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
@@ -13,9 +10,6 @@ import { cn } from '@lib/utils';
 import Logo from '../../../public/Icon.png';
 
 export default function Navbar() {
-  /** disable eslint */
-  const [toggleMenu, setToggleMenu] = useState(false);
-
   return (
     <header
       className={`fixed top-0 left-0 w-full h-20 duration-200 ease-[cubic-bezier(0,0,0,1)] text-black z-20 overflow-hidden`}>
