@@ -12,7 +12,7 @@ import Logo from '../../../public/Icon.png';
 export default function Navbar() {
   return (
     <header
-      className={`fixed top-0 left-0 w-full h-20 duration-200 ease-[cubic-bezier(0,0,0,1)] text-black z-20 overflow-hidden`}>
+      className={`fixed top-0 left-0 w-full bg-white h-20 duration-200 ease-[cubic-bezier(0,0,0,1)] text-black z-20 overflow-hidden`}>
       <div className="w-full flex items-center justify-between p-4">
         <Link href="/" className="font-bold text-lg flex items-center gap-x-2 order-1">
           <Image src={Logo} alt="Reda logo" width={30} height={30} quality={95} priority />

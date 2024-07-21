@@ -1,6 +1,9 @@
 /* eslint-disable indent */
 /* eslint-disable space-before-function-paren */
 /* eslint-disable no-use-before-define */
+
+'use client';
+
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
