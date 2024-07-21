@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 
 import './globals.css';
 
+import { Toaster } from '@components';
 import { siteConfig } from '@config/site';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -43,7 +44,7 @@ export const metadata: Metadata = {
     title: siteConfig.name,
     description: siteConfig.description,
     images: [siteConfig.ogImage],
-    creator: '@shadcn',
+    creator: '@abasshammedola',
   },
   icons: {
     icon: '/favicon.ico',
@@ -58,6 +59,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-white`}>{children}</body>
+      <Toaster />
     </html>
   );
 }
