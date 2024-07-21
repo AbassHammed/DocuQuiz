@@ -1,11 +1,11 @@
-import { Header, HomeForm, Navbar } from '@components';
+import { FormContainer, Header, Navbar } from '@components';
 
 export default function Home() {
   return (
     <main className="relative">
       <Navbar />
       <Header />
-      <HomeForm />
+      <FormContainer />
     </main>
   );
 }

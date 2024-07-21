@@ -137,7 +137,7 @@ const HomeForm = () => {
 
   const handleRemoveFile = () => setPdfFile(undefined);
   return (
-    <section className="relative bg-gray-100 border border-zinc-100 rounded-2xl max-w-4xl lg:mx-auto mx-4 lg:p-12 p-6 mb-10 min-h-72 ring-1 ring-gray-300">
+    <>
       <header className="text-center mb-10">
         <h2 className="text-lg font-semibold mb-1">Add Notes</h2>
         <p className="text-xs text-zinc-400"> Paste your notes as text or upload a file</p>
@@ -325,7 +325,7 @@ const HomeForm = () => {
           </form>
         </Form>
       </div>
-    </section>
+    </>
   );
 };
 
