@@ -25,7 +25,7 @@ export default function Summary() {
           reset();
           router.push('/');
         }}
-        className="min-w-28 min-h-10 mx-auto bg-primary hover:bg-secondary text-white place-content-center text-center px-8 py-3 rounded-full duration-200 mb-10">
+        className="min-w-28 min-h-10 mx-auto bg-primary text-white place-content-center text-center px-8 py-3 rounded-full duration-200 mb-10">
         Exit
       </button>
     </header>

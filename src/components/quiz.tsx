@@ -30,16 +30,16 @@ export default function Quiz({
   return (
     <label
       htmlFor={alpha}
-      className={`flex items-center justify-between w-full gap-x-6 max-w-xl mx-auto rounded-full px-4 py-3 font-geistmono cursor-pointer min-h-16 duration-300 ${getColStr(
-        'bg-primary text-white',
-        'bg-error text-white',
-        'bg-zinc-100 text-zinc-700',
+      className={`flex items-center justify-between w-full gap-x-6 max-w-xl mx-auto bg-gray-300 text-zinc-700 border-2 rounded-full px-4 py-3 cursor-pointer min-h-16 duration-300 ${getColStr(
+        'border-green-500',
+        'border-red-600',
+        'border-gray-300',
       )}`}>
       <div
         className={`min-w-8 min-w-h-8 grid place-content-center rounded-full font-medium
        ${getColStr(
-         'bg-secondary text-white',
-         'bg-[#cc1f1f] text-white',
+         'bg-green-500 text-white',
+         'bg-red-600 text-white',
          'bg-zinc-100 text-zinc-700',
        )}`}>
         {alpha}
@@ -57,12 +57,8 @@ export default function Quiz({
           }
         }}
         disabled={hasAnswered}
-        className={`ml-auto self-center h-4 w-4 rounded-full focus:ring-transparent
-        ${getColStr(
-          'border-[#1d64c0] text-secondary',
-          'border-[#bb2020] text-red-500',
-          'border-gray-300 text-primary',
-        )}`}
+        className={`ml-auto self-center h-4 w-4 rounded-full border-2 focus:ring-transparent
+        ${getColStr('border-[#1d64c0]', 'border-[#bb2020]', 'border-gray-300')}`}
       />
     </label>
   );

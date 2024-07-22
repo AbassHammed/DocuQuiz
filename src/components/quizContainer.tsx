@@ -50,16 +50,18 @@ export default function QuizContainer() {
 
       {lastQuestion ? (
         <button
+          disabled={selectedAnswer ? false : true}
           onClick={() => setStatus('summary')}
-          className="flex mx-auto mt-16 bg-primary hover:bg-secondary text-white text-center px-4 py-3 rounded-full duration-200">
+          className="flex mx-auto mt-16 bg-primary text-white text-center px-4 py-3 rounded-md">
           View Summary
         </button>
       ) : (
         <button
+          disabled={selectedAnswer ? false : true}
           onClick={() => {
             nextIndex();
           }}
-          className="flex mx-auto mt-16 bg-primary hover:bg-secondary text-white text-center px-4 py-3 rounded-full duration-200">
+          className="flex mx-auto mt-16 bg-primary text-white text-center px-4 py-3 rounded-md">
           Next Question
         </button>
       )}
