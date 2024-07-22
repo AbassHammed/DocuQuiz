@@ -30,3 +30,4 @@ export {
 } from './shared/select';
 export { Tabs, TabsList, TabsTrigger, TabsContent } from './shared/tabs';
 export { default as FormContainer } from './sections/formContainer';
+export { default as Loading } from './Loading';
