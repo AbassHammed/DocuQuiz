@@ -26,14 +26,15 @@ import {
 } from '@components';
 import { zodResolver } from '@hookform/resolvers/zod';
 import pdfToText from '@lib/utils';
-import { File, Notebook, XIcon } from 'lucide-react';
+import { FormSubmitType } from '@types';
+import { File, Loader2, Notebook, XIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 const MAX_FILE_SIZE = 10000000; //10MB
 const FILE_TYPE = 'application/pdf';
 
-const difficulty = [
+const difficult = [
   { label: 'Easy', value: 'easy' },
   { label: 'Moderate', value: 'moderate' },
   { label: 'Hard', value: 'hard' },
@@ -54,16 +55,22 @@ const homeFormSchema = z.object({
     .string({ required_error: 'You must give a topic to the quiz.' })
     .min(6, { message: 'The topic must be at least 6 caracters' })
     .max(30, { message: "The topic can't be longer than 30 characters" }),
-  difficult: z.string({
+  difficulty: z.string({
     required_error: 'Please select a difficulty',
   }),
-  quiz: z.string({ required_error: 'Please select the number of series you want to generate.' }),
-  time: z.string({ required_error: 'Please select the duration of the quiz' }),
+  quizCount: z.string({
+    required_error: 'Please select the number of series you want to generate.',
+  }),
+  timer: z.string({ required_error: 'Please select the duration of the quiz' }),
 });
 
-type HomeFormValues = z.infer<typeof homeFormSchema>;
+export type HomeFormValues = z.infer<typeof homeFormSchema>;
 
-const HomeForm = () => {
+interface props {
+  onSubmit: (data: FormSubmitType) => void;
+}
+
+const HomeForm = ({ onSubmit }: props) => {
   const [pdfFile, setPdfFile] = useState<File>();
   const { toast } = useToast();
   const [note, setNote] = useState<string | undefined>();
@@ -125,15 +132,20 @@ const HomeForm = () => {
 
   const defaultValues: Partial<HomeFormValues> = {
     topic: '',
-    difficult: '',
-    quiz: '',
-    time: '',
+    difficulty: '',
+    quizCount: '',
+    timer: '',
   };
 
   const form = useForm<HomeFormValues>({
     resolver: zodResolver(homeFormSchema),
     defaultValues,
   });
+
+  const onFormSubmit = async (data: HomeFormValues) => {
+    const formData: FormSubmitType = { ...data, text: note! };
+    onSubmit(formData);
+  };
 
   const handleRemoveFile = () => setPdfFile(undefined);
   return (
@@ -144,7 +156,7 @@ const HomeForm = () => {
       </header>
       <div className="flex flex-col gap-3 mb-4">
         <Form {...form}>
-          <form className="space-y-8">
+          <form className="space-y-8" onSubmit={form.handleSubmit(onFormSubmit)}>
             <FormField
               control={form.control}
               name="topic"
@@ -156,6 +168,7 @@ const HomeForm = () => {
                       placeholder="Object-oriented programming in Java"
                       {...field}
                       onKeyDown={handleKeyDown}
+                      disabled={generating}
                     />
                   </FormControl>
                   <FormMessage />
@@ -166,7 +179,7 @@ const HomeForm = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
-                name="difficult"
+                name="difficulty"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Select difficult level</FormLabel>
@@ -177,7 +190,7 @@ const HomeForm = () => {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {difficulty.map(diff => (
+                        {difficult.map(diff => (
                           <SelectItem key={diff.label} value={diff.value}>
                             {diff.label}
                           </SelectItem>
@@ -191,7 +204,7 @@ const HomeForm = () => {
 
               <FormField
                 control={form.control}
-                name="quiz"
+                name="quizCount"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>How many quizzes do you want to generate ?</FormLabel>
@@ -215,7 +228,7 @@ const HomeForm = () => {
               />
               <FormField
                 control={form.control}
-                name="time"
+                name="timer"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Completion Time</FormLabel>
@@ -267,6 +280,7 @@ const HomeForm = () => {
                     cols={30}
                     onChange={e => setNote(e.target.value)}
                     required
+                    disabled={generating}
                     placeholder="Paste your note here."
                     className="appearance-none w-full p-3 border border-zinc-200 placeholder-zinc-400 rounded-md focus:outline-none focus:ring-zinc-300 text-sm"></textarea>
                 </label>
@@ -297,6 +311,7 @@ const HomeForm = () => {
                           </p>
                         </label>
                         <input
+                          disabled={generating}
                           id="file"
                           type="file"
                           className="hidden"
@@ -322,6 +337,15 @@ const HomeForm = () => {
                 </div>
               </TabsContent>
             </Tabs>
+            <div className="flex items-center justify-center w-full">
+              <Button
+                type="submit"
+                onClick={() => setGenerating(prev => !prev)}
+                className="flex items-center justify-center w-72">
+                {generating ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+                {generating ? 'Generating Quiz ...' : 'Generate Quiz'}
+              </Button>
+            </div>
           </form>
         </Form>
       </div>
