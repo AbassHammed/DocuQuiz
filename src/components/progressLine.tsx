@@ -2,7 +2,7 @@
 
 import { useQuizStore } from '@store';
 
-export default function ProgressBar() {
+export default function ProgressLine() {
   const points = useQuizStore(state => state.totalPoints);
   const index = useQuizStore(state => state.index) + 1;
   const count = useQuizStore(state => state.quizzes.length);
