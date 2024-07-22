@@ -66,10 +66,7 @@ export async function POST(request: NextRequest) {
 
     console.log(result);
 
-    return NextResponse.json({
-      message: 'Form data received successfully',
-      result,
-    });
+    return NextResponse.json(result);
   } catch (error) {
     console.error('Error processing request:', error);
     return NextResponse.json(

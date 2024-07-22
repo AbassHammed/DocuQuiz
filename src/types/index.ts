@@ -20,4 +20,4 @@ export type QuizType = {
   ressources: [{ title: string; link: string }];
 };
 
-export type StreamStatus = 'idle' | 'streaming' | 'done' | 'start' | 'summary';
+export type StreamStatus = 'idle' | 'streaming' | 'done' | 'start' | 'summary' | 'error';
