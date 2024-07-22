@@ -53,7 +53,7 @@ export default function QuizContainer() {
           disabled={selectedAnswer ? false : true}
           onClick={() => setStatus('summary')}
           className="flex mx-auto mt-16 bg-primary text-white text-center px-4 py-3 rounded-md">
-          View Summary
+          Terminer
         </button>
       ) : (
         <button
@@ -62,7 +62,7 @@ export default function QuizContainer() {
             nextIndex();
           }}
           className="flex mx-auto mt-16 bg-primary text-white text-center px-4 py-3 rounded-md">
-          Next Question
+          Question suivante
         </button>
       )}
     </div>

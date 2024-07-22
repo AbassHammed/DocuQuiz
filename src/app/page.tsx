@@ -1,4 +1,4 @@
-import { FormContainer, Header, Navbar } from '@components';
+import { Footer, FormContainer, Header, Navbar } from '@components';
 
 export default function Home() {
   return (
@@ -6,6 +6,7 @@ export default function Home() {
       <Navbar />
       <Header />
       <FormContainer />
+      <Footer />
     </main>
   );
 }
