@@ -60,13 +60,14 @@ export async function POST(request: NextRequest) {
       top_p: 1,
       frequency_penalty: 0,
       presence_penalty: 0,
+      response_format: { type: 'json_object' },
     });
 
     const result = response.choices[0].message?.content || '';
 
-    console.log(result);
+    const quizData = JSON.parse(result);
 
-    return NextResponse.json(result);
+    return NextResponse.json(quizData);
   } catch (error) {
     console.error('Error processing request:', error);
     return NextResponse.json(

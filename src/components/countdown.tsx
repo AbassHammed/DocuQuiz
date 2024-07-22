@@ -10,7 +10,7 @@ interface TimerProps {
   setTimeLeft: Dispatch<SetStateAction<number>>;
 }
 
-export default function CountdownTimer({ timeLeft, setTimeLeft }: TimerProps) {
+export default function Countdown({ timeLeft, setTimeLeft }: TimerProps) {
   const setStatus = useFormStore(state => state.setStatus);
 
   useEffect(() => {

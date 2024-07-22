@@ -32,3 +32,7 @@ export { Tabs, TabsList, TabsTrigger, TabsContent } from './shared/tabs';
 export { default as FormContainer } from './sections/formContainer';
 export { default as Loading } from './Loading';
 export { default as Summary } from './summary';
+export { default as Quiz } from './quiz';
+export { default as ProgressLine } from './progressLine';
+export { default as Countdown } from './countdown';
+export { default as QuizContainer } from './quizContainer';

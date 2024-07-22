@@ -17,7 +17,7 @@ interface StoreActions extends StoreState {
   reset: () => void;
 }
 
-const initialState: StoreState = {
+const initialState = {
   quizzes: [],
   index: 0,
   selectedAnswer: '',

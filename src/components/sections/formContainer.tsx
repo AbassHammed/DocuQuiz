@@ -1,10 +1,8 @@
-/* eslint-disable no-console */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import { useEffect, useState } from 'react';
 
-import { HomeForm, Loading, Summary } from '@components';
+import { HomeForm, Loading, QuizContainer, Summary } from '@components';
 import { useFormStore, useQuizStore, useTimerStore } from '@store';
 import { FormSubmitType } from '@types';
 
@@ -29,6 +27,28 @@ const FormContainer = () => {
     }
   }, [resContent, reset, setQuizzes, setStatus, status]);
 
+  const parseQuizResponse = (response: any) => {
+    const quizKeys = Object.keys(response).filter(key => Array.isArray(response[key]));
+
+    for (const key of quizKeys) {
+      const potentialQuizzes = response[key];
+      if (
+        potentialQuizzes.length > 0 &&
+        typeof potentialQuizzes[0] === 'object' &&
+        potentialQuizzes[0].question
+      ) {
+        return potentialQuizzes.map((quiz: any) => ({
+          id: quiz.id.toString(),
+          question: quiz.question,
+          description: quiz.description,
+          options: quiz.options,
+          answer: quiz.answer,
+        }));
+      }
+    }
+    return [];
+  };
+
   const onSubmit = async (data: FormSubmitType) => {
     try {
       setStatus('streaming');
@@ -51,9 +71,9 @@ const FormContainer = () => {
         setStatus('error');
       }
 
-      const responseData = await response.text();
-      const formattedContent = responseData.replace('```json', '').replace('```', '');
-      setResContent(formattedContent);
+      const responseData = await response.json();
+      const quizzes = parseQuizResponse(responseData);
+      setResContent(JSON.stringify(quizzes));
       setStatus('done');
     } catch (e) {
       setStatus('error');
@@ -62,9 +82,9 @@ const FormContainer = () => {
 
   return (
     <section className="relative bg-gray-100 border border-zinc-100 rounded-2xl max-w-4xl lg:mx-auto mx-4 lg:p-12 p-6 mb-10 min-h-72 ring-1 ring-gray-300">
-      {/* {status === 'idle' && <HomeForm onSubmit={onSubmit} />} */}
+      {status === 'idle' && <HomeForm onSubmit={onSubmit} />}
       {status === 'streaming' && <Loading />}
-      {status === 'idle' && (
+      {status === 'done' && (
         <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 text-center">
           <p className="max-w-sm text-center text-sm text-zinc-500 mb-4">
             Quiz successfully generated! Click the button to begin whenever you&apos;re ready!
@@ -76,6 +96,7 @@ const FormContainer = () => {
           </button>
         </div>
       )}
+      {status === 'start' && <QuizContainer />}
       {status === 'summary' && <Summary />}
     </section>
   );
