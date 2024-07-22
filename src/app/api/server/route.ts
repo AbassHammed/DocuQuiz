@@ -19,14 +19,14 @@ export async function POST(request: NextRequest) {
     const quizCount = formData.get('quizCount') as string;
 
     const text1 = {
-      text: `You are an all-rounder tutor with professional expertise in different fields. You are to generate a list of quiz questions from the document(s) with a difficutly of ${
-        difficulty || 'Easy'
+      text: `Vous êtes un tuteur polyvalent avec une expertise professionnelle dans différents domaines. Vous devez générer une liste de questions de quiz à partir du ou des documents avec une difficulté de  ${
+        difficulty || 'Facile'
       }.`,
     };
     const text2 = {
-      text: `You response should be in JSON as an array of the object below. Respond with ${
+      text: `Votre réponse doit être en JSON sous forme d'un tableau d'objets comme ci-dessous. Répondez avec  ${
         quizCount || 5
-      } different questions.
+      } questions différentes. peu importe la langue de données, les questions doivent être en français.
   {
    \"id\": 1,
    \"question\": \"\",

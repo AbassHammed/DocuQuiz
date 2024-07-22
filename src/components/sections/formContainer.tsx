@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 
 import { Button, ErrorUI, HomeForm, Loading, QuizContainer, Summary } from '@components';
-import quizzesData from '@data';
 import { useFormStore, useQuizStore, useTimerStore } from '@store';
 import { FormSubmitType } from '@types';
 
@@ -20,7 +19,6 @@ const FormContainer = () => {
       try {
         const data = JSON.parse(resContent);
         setQuizzes(data);
-        setStatus('start');
       } catch {
         reset();
         setResContent('');
@@ -82,15 +80,10 @@ const FormContainer = () => {
     }
   };
 
-  const loadQuizzesFromJson = () => {
-    const quizzes = parseQuizResponse(quizzesData);
-    setResContent(JSON.stringify(quizzes));
-  };
-
   return (
     <section className="relative bg-gray-100 border border-zinc-100 rounded-2xl max-w-4xl lg:mx-auto mx-4 lg:p-12 p-6 mb-10 min-h-72 ring-1 ring-gray-300">
-      {status === 'idle' && <ErrorUI />}
-      {status === 'error' && <HomeForm onSubmit={onSubmit} />}
+      {status === 'error' && <ErrorUI />}
+      {status === 'idle' && <HomeForm onSubmit={onSubmit} />}
       {status === 'streaming' && <Loading />}
       {status === 'done' && (
         <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 text-center">
@@ -98,10 +91,7 @@ const FormContainer = () => {
             Quiz généré avec succès ! Cliquez sur le bouton pour commencer quand vous êtes prêt !
           </p>
           <Button
-            onClick={() => {
-              loadQuizzesFromJson();
-              setStatus('done');
-            }}
+            onClick={() => setStatus('start')}
             className="font-semibold tracking-widest bg-primary duration-200 text-white rounded-full px-6 py-3">
             Commencer le quiz
           </Button>

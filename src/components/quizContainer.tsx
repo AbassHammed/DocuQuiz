@@ -42,9 +42,9 @@ export default function QuizContainer() {
       {selectedAnswer && (
         <em className="block not-italic text-sm font-geistmono text-center">
           <span className={correctAnswer ? 'text-green-600' : 'text-red-600'}>
-            {correctAnswer ? 'Correct!' : 'Wrong!'}
+            {correctAnswer ? 'Correct!' : 'Faux!'}
           </span>{' '}
-          The answer is <span className="font-bold">&#40;{answer}&#41;</span>
+          La réponse est <span className="font-bold">&#40;{answer}&#41;</span>
         </em>
       )}
 
