@@ -6,15 +6,16 @@ import { useRouter } from 'next/navigation';
 import { useFormStore } from '@store';
 
 import ErrorImage from '../../public/error.svg';
+import NotFoundImage from '../../public/pnf.svg';
 
-const ErrorUI = () => {
+const ErrorUI = ({ pnfPage = false }: { pnfPage?: boolean }) => {
   const router = useRouter();
   const setStatus = useFormStore(state => state.setStatus);
 
   return (
     <div className="flex flex-col items-center space-y-8">
       <Image
-        src={ErrorImage}
+        src={pnfPage ? NotFoundImage : ErrorImage}
         alt="Error Image"
         priority
         quality={95}
