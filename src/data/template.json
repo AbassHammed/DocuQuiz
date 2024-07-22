@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "question": "What does the statement 'x = x + 1' achieve in Python?",
+    "description": "This question tests knowledge of variable updating in Python, specifically incrementing a variable.",
+    "options": {
+      "a": "It assigns the value of x to x + 1.",
+      "b": "It creates a new variable x with the value of x + 1.",
+      "c": "It causes an error if x has not been initialized.",
+      "d": "It does nothing and leaves x unchanged."
+    },
+    "answer": "c"
+  },
+  {
+    "id": 2,
+    "question": "Which of the following scenarios will cause an infinite loop when using a while statement in Python?",
+    "description": "This question assesses understanding of loop conditions and breaking out of loops.",
+    "options": {
+      "a": "While True:",
+      "b": "While n > 0:",
+      "c": "While n != 1:",
+      "d": "While x is equal to 10, without changing x."
+    },
+    "answer": "a"
+  },
+  {
+    "id": 3,
+    "question": "In the context of variable reassignment in Python, why is 'a = b' not equivalent to 'b = a'?",
+    "description": "This question examines the misconception regarding assignment and equality in Python compared to mathematics.",
+    "options": {
+      "a": "Assignment is only a left-side equation in Python.",
+      "b": "Python does not support symmetric relationships.",
+      "c": "Reassigning variables alters their reference and does not maintain equality.",
+      "d": "Both a and c are true."
+    },
+    "answer": "d"
+  },
+  {
+    "id": 4,
+    "question": "What is the primary reason testing floating-point equality directly in Python can lead to issues?",
+    "description": "This question tests understanding of how floating-point numbers are managed in programming.",
+    "options": {
+      "a": "Floating-point numbers can sometimes produce exact outputs, making checks simple.",
+      "b": "Floating-point numbers cannot be represented exactly, leading to inaccuracies.",
+      "c": "Python avoids using floating-point numbers in calculations by default.",
+      "d": "The == operator does not work with floating-point numbers in Python."
+    },
+    "answer": "b"
+  },
+  {
+    "id": 5,
+    "question": "What adjustment should be made when the algorithm for computing square roots in Python is modified for improved accuracy?",
+    "description": "This question assesses the understanding of algorithmic adjustments to improve computational results.",
+    "options": {
+      "a": "Use integer division instead of float division.",
+      "b": "Add a static limit to the number of iterations.",
+      "c": "Refine the stopping condition using a small epsilon value.",
+      "d": "Multiply the estimate by a constant to increase its value."
+    },
+    "answer": "c"
+  }
+]

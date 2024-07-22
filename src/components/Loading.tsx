@@ -20,7 +20,7 @@ const Loading = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center space-y-8">
       <ProgressBar
         max={100}
         min={0}
