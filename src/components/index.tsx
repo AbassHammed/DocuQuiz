@@ -37,3 +37,4 @@ export { default as ProgressLine } from './progressLine';
 export { default as Countdown } from './countdown';
 export { default as QuizContainer } from './quizContainer';
 export { default as Footer } from './sections/footer';
+export { default as ErrorUI } from './errorui';

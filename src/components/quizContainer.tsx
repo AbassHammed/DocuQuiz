@@ -52,7 +52,7 @@ export default function QuizContainer() {
         <button
           disabled={selectedAnswer ? false : true}
           onClick={() => setStatus('summary')}
-          className="flex mx-auto mt-16 bg-primary text-white text-center px-4 py-3 rounded-md">
+          className="flex mx-auto mt-16 bg-black text-white text-center px-4 py-3 rounded-md">
           Terminer
         </button>
       ) : (
@@ -61,7 +61,7 @@ export default function QuizContainer() {
           onClick={() => {
             nextIndex();
           }}
-          className="flex mx-auto mt-16 bg-primary text-white text-center px-4 py-3 rounded-md">
+          className="flex mx-auto mt-16 bg-black text-white text-center px-4 py-3 rounded-md">
           Question suivante
         </button>
       )}

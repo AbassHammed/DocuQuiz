@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
-import { Button, HomeForm, Loading, QuizContainer, Summary } from '@components';
+import { Button, ErrorUI, HomeForm, Loading, QuizContainer, Summary } from '@components';
 import quizzesData from '@data';
 import { useFormStore, useQuizStore, useTimerStore } from '@store';
 import { FormSubmitType } from '@types';
@@ -89,9 +89,10 @@ const FormContainer = () => {
 
   return (
     <section className="relative bg-gray-100 border border-zinc-100 rounded-2xl max-w-4xl lg:mx-auto mx-4 lg:p-12 p-6 mb-10 min-h-72 ring-1 ring-gray-300">
+      {status === 'idle' && <ErrorUI />}
       {status === 'error' && <HomeForm onSubmit={onSubmit} />}
       {status === 'streaming' && <Loading />}
-      {status === 'idle' && (
+      {status === 'done' && (
         <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 text-center">
           <p className="max-w-sm text-center text-sm text-zinc-500 mb-4">
             Quiz généré avec succès ! Cliquez sur le bouton pour commencer quand vous êtes prêt !
