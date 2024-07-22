@@ -1,3 +1,5 @@
+'use client';
+
 import { Footer, FormContainer, Header, Navbar } from '@components';
 
 export default function Home() {

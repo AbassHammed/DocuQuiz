@@ -75,7 +75,7 @@ const HomeForm = ({ onSubmit }: props) => {
   const [pdfFile, setPdfFile] = useState<File>();
   const { toast } = useToast();
   const setStatus = useFormStore(state => state.setStatus);
-  const [note, setNote] = useState<string | undefined>();
+  const [note, setNote] = useState<string | undefined>(undefined);
   const [generating, setGenerating] = useState(false);
 
   const convertPdfToText = async (files: File) => {
@@ -243,7 +243,7 @@ const HomeForm = ({ onSubmit }: props) => {
                       </FormControl>
                       <SelectContent>
                         {quizTime.map(diff => (
-                          <SelectItem key={diff.label} value={`${diff.label} min`}>
+                          <SelectItem key={diff.label} value={diff.label}>
                             {`${diff.label} min`}
                           </SelectItem>
                         ))}
@@ -343,6 +343,7 @@ const HomeForm = ({ onSubmit }: props) => {
             <div className="flex items-center justify-center w-full">
               <Button
                 type="submit"
+                disabled={typeof note === 'string' ? false : true}
                 onClick={() => setGenerating(prev => !prev)}
                 className="flex items-center justify-center w-72">
                 {generating ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
