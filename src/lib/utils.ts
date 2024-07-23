@@ -4,7 +4,10 @@ import { ClassValue, clsx } from 'clsx';
 import { pdfjs } from 'react-pdf';
 import { twMerge } from 'tailwind-merge';
 
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/legacy/build/pdf.worker.min.mjs',
+  import.meta.url,
+).toString();
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
