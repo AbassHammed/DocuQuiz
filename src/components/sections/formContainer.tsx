@@ -69,6 +69,7 @@ const FormContainer = () => {
 
       if (!response.ok) {
         setStatus('error');
+        return;
       }
 
       const responseData = await response.json();
