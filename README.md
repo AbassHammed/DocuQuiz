@@ -5,7 +5,7 @@
   DocuQuiz
 </h1>
 
-![demo](public/og.png)
+![demo](public/image.png)
 
 #### DocuQuiz is a simple and user-friendly app designed to effortlessly convert your notes and documents into interactive quizzes.
 
